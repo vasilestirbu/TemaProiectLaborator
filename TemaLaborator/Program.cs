@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace InchirieriMasini
 {
+
     public class Masina
     {
         public string Marca { get; set; }
@@ -34,13 +36,87 @@ namespace InchirieriMasini
 
     class Program
     {
+        static void SalveazaMasina(Masina m)
+        {
+            using(StreamWriter sw = new StreamWriter("masini.txt", true))
+            {
+                sw.WriteLine($"{m.Marca};{m.Model};{m.NumarInmatriculare};{m.EsteDisponibila}");    
+            }
+        }
+
+        static List<Masina> IncarcaMasini()
+        {
+            List<Masina> lista = new List<Masina>();
+            if (!File.Exists("masini.txt")) return lista;
+
+            string[] linii = File.ReadAllLines("masini.txt");
+            foreach(var linie in linii)
+            {
+                string[] date = linie.Split(';');
+                Masina m = new Masina
+                {
+                    Marca = date[0],
+                    Model = date[1],
+                    NumarInmatriculare = date[2],
+                    EsteDisponibila = bool.Parse(date[3])
+                };
+                lista.Add(m);
+            }
+            return lista;
+        }
+
+        static void SalveazaClient(Client c)
+        {
+            using (StreamWriter sw = new StreamWriter("clienti.txt", true))
+            {
+                sw.WriteLine($"{c.Nume};{c.Prenume};{c.CNP}");
+            }
+        }
+
+        static List<Client> IncarcaClienti()
+        {
+            List<Client> lista = new List<Client>();
+            if (!File.Exists("clienti.txt")) return lista;
+
+            string[] linii = File.ReadAllLines("clienti.txt");
+            foreach (var linie in linii)
+            {
+                string[] date = linie.Split(';');
+                Client c = new Client
+                {
+                    Nume = date[0],
+                    Prenume = date[1],
+                    CNP = date[2]
+                };
+                lista.Add(c);
+            }
+            return lista;
+        }
+
+        static void SuprascrieMasini(List<Masina> masini)
+        {
+            using (StreamWriter sw = new StreamWriter("masini.txt", false))
+            {
+                foreach (var m in masini)
+                    sw.WriteLine($"{m.Marca};{m.Model};{m.NumarInmatriculare};{m.EsteDisponibila}");
+            }
+        }
+
+        static void SuprascrieClienti(List<Client> clienti)
+        {
+            using (StreamWriter sw = new StreamWriter("clienti.txt", false))
+            {
+                foreach (var c in clienti)
+                    sw.WriteLine($"{c.Nume};{c.Prenume};{c.CNP}");
+            }
+        }
 
         static void Main(string[] args)
         {
             bool rulare = true;
 
-            List<Masina> listaMasini = new List<Masina>();
-            List<Client> listaClienti = new List<Client>();
+            List<Masina> listaMasini = IncarcaMasini();
+            List<Client> listaClienti = IncarcaClienti();
 
             while (rulare)
             {
@@ -51,6 +127,8 @@ namespace InchirieriMasini
                 Console.WriteLine("3 - Cauta masina dupa marca.");
                 Console.WriteLine("4 - Client Nou.");
                 Console.WriteLine("5 - Iesire.");
+                Console.WriteLine("6 - Modifica masina dupa numar");
+                Console.WriteLine("7 - Modifica client dupa CNP");
                 Console.Write("\nSelectati o optiune:");
 
                 string optiune = Console.ReadLine();
@@ -140,7 +218,65 @@ namespace InchirieriMasini
                             "Incercati din nou.");
                         break;
 
-                                                                
+                    case "6":
+                        Console.Write("Introdu numarul de inmatriculare: ");
+                        string nr = Console.ReadLine();
+                        bool modificat = false;
+
+                        for (int i = 0; i < listaMasini.Count; i++)
+                        {
+                            if (listaMasini[i].NumarInmatriculare == nr)
+                            {
+                                Console.Write("Marca noua: ");
+                                listaMasini[i].Marca = Console.ReadLine();
+                                Console.Write("Model nou: ");
+                                listaMasini[i].Model = Console.ReadLine();
+                                modificat = true;
+                                break;
+                            }
+                        }
+
+                        if (modificat)
+                        {
+                            SuprascrieMasini(listaMasini);
+                            Console.WriteLine("Masina modificata!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Masina nu a fost gasita!");
+                        }
+                        break;
+
+                    case "7":
+                        Console.Write("CNP client: ");
+                        string cnp = Console.ReadLine();
+                        bool gasitClient = false;
+
+                        foreach (var c in listaClienti)
+                        {
+                            if (c.CNP == cnp)
+                            {
+                                Console.Write("Nume nou: ");
+                                c.Nume = Console.ReadLine();
+                                Console.Write("Prenume nou: ");
+                                c.Prenume = Console.ReadLine();
+                                gasitClient = true;
+                                break;
+                            }
+                        }
+
+                        if (gasitClient)
+                        {
+                            SuprascrieClienti(listaClienti);
+                            Console.WriteLine("Client modificat!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Client negasit!");
+                        }
+                        break;
+
+
                 }
 
                 if (rulare)
