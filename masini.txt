@@ -1,0 +1,20 @@
+Dacia;Logan;B123AAA;True;Alb;AerConditionat
+Dacia;Duster;B456BBB;True;Negru;AerConditionat, Navigatie
+Renault;Clio;CJ99CCC;True;Rosu;AerConditionat
+Renault;Megane;TM10DDD;True;Negru;AerConditionat, Navigatie, CutieAutomata
+Volkswagen;Golf;IS45EEE;True;Alb;AerConditionat, Navigatie
+Volkswagen;Passat;B222FFF;True;Negru;AerConditionat, Navigatie, CutieAutomata
+BMW;Seria 3;B333GGG;True;Negru;AerConditionat, Navigatie, CutieAutomata
+BMW;X5;CJ77HHH;True;Alb;AerConditionat, Navigatie, CutieAutomata
+Audi;A4;TM88III;True;Rosu;AerConditionat, Navigatie
+Audi;Q5;IS11JJJ;True;Negru;AerConditionat, Navigatie, CutieAutomata
+Skoda;Octavia;B555KKK;True;Alb;AerConditionat, Navigatie
+Skoda;Superb;CJ22LLL;True;Negru;AerConditionat, Navigatie, CutieAutomata
+Ford;Focus;TM33MMM;True;Rosu;AerConditionat
+Ford;Kuga;IS66NNN;True;Alb;AerConditionat, Navigatie
+Toyota;Corolla;B999PPP;True;Alb;AerConditionat, Navigatie, CutieAutomata
+Toyota;RAV4;CJ44QQQ;True;Negru;AerConditionat, Navigatie, CutieAutomata
+Hyundai;Tucson;TM55RRR;True;Alb;AerConditionat, Navigatie, CutieAutomata
+Hyundai;i30;IS22SSS;True;Rosu;AerConditionat
+Mercedes-Benz;C-Class;B777TTT;True;Negru;AerConditionat, Navigatie, CutieAutomata
+Mercedes-Benz;GLC;CJ88UUU;True;Alb;AerConditionat, Navigatie, CutieAutomata

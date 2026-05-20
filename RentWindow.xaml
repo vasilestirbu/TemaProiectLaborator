@@ -1,0 +1,147 @@
+<Window x:Class="InchirieriMasiniWPF.RentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="🔑 Închiriere Mașină Nouă" Height="480" Width="550"
+        WindowStartupLocation="CenterOwner"
+        Background="#F0F4F8" ResizeMode="NoResize">
+
+    <Window.Resources>
+        
+        <Style x:Key="BtnRentStyle" TargetType="Button">
+            <Setter Property="Background" Value="#10B981"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#059669"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        
+        <Style x:Key="BtnCancelStyle" TargetType="Button">
+            <Setter Property="Background" Value="#64748B"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#475569"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        
+        <Style x:Key="ModernCombo" TargetType="ComboBox">
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="🔑 Creare Contract Închiriere" FontSize="20" FontWeight="Bold" Foreground="#1E3A5F"/>
+            <TextBlock Text="Selectați clientul, mașina disponibilă și durata închirierii." FontSize="12" Foreground="#64748B" Margin="0,4,0,0"/>
+        </StackPanel>
+
+        
+        <Border Grid.Row="1" Background="White" CornerRadius="10" Padding="20">
+            <Border.Effect>
+                <DropShadowEffect Color="#CBD5E1" BlurRadius="8" ShadowDepth="2" Opacity="0.4"/>
+            </Border.Effect>
+            
+            <StackPanel VerticalAlignment="Center">
+                
+                <TextBlock Text="👤 Selectați Clientul" FontWeight="SemiBold" FontSize="13" Foreground="#475569" Margin="0,0,0,6"/>
+                <ComboBox x:Name="CmbClienti" Style="{StaticResource ModernCombo}" Margin="0,0,0,16"
+                          DisplayMemberPath="NumeComplet"/>
+
+                
+                <TextBlock Text="🚗 Selectați Mașina Disponibilă" FontWeight="SemiBold" FontSize="13" Foreground="#475569" Margin="0,0,0,6"/>
+                <ComboBox x:Name="CmbMasini" Style="{StaticResource ModernCombo}" Margin="0,0,0,20">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="{Binding Marca, Mode=OneWay}" FontWeight="Bold"/>
+                                <Run Text="{Binding Model, Mode=OneWay}"/>
+                                <Run Text=" - "/>
+                                <Run Text="{Binding NumarInmatriculare, Mode=OneWay}" Foreground="#2563EB"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                
+                <Grid Margin="0,0,0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Text="⏱ Durată Închiriere" FontWeight="SemiBold" FontSize="13" Foreground="#475569" VerticalAlignment="Center"/>
+                    
+                    
+                    <TextBlock Grid.Column="1" 
+                               Text="{Binding ElementName=SliderZile, Path=Value, StringFormat='{}{0:0} zile'}" 
+                               FontWeight="Bold" FontSize="14" Foreground="#2563EB" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Slider x:Name="SliderZile" Minimum="1" Maximum="30" Value="1" 
+                        TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,0,0,20"/>
+
+                
+                <Border Background="#F8FAFC" BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="6" Padding="12">
+                    <TextBlock Text="{Binding ElementName=SliderZile, Path=Value, StringFormat='💰 Cost estimat: {0:0}00 RON (100 RON/zi)'}" 
+                               FontWeight="Bold" FontSize="14" Foreground="#10B981" HorizontalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        
+        <Grid Grid.Row="2" Margin="0,20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0" Content="❌ Renunță" Style="{StaticResource BtnCancelStyle}" 
+                    Margin="0,0,8,0" Click="BtnCancel_Click"/>
+            <Button Grid.Column="1" Content="🚀 Finalizează Închiriere" Style="{StaticResource BtnRentStyle}" 
+                    Margin="8,0,0,0" Click="BtnRent_Click"/>
+        </Grid>
+    </Grid>
+</Window>
